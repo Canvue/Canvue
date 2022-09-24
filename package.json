@@ -1,0 +1,36 @@
+{
+  "name": "@canvue/canvue",
+  "version": "0.2.7",
+  "author": "LeeNux @lc7457",
+  "license": "MIT",
+  "main": "src/index.js",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Canvue/canvue.git"
+  },
+  "dependencies": {
+    "@unjuanable/jokes": "^0.2.4",
+    "@unjuanable/viper": "^1.1.2",
+    "aggregation": "^1.2.7",
+    "fabric": "^5.2.1",
+    "nanoid": "^4.0.0"
+  },
+  "devDependencies": {
+    "@dtlc/iconfont": "^1.0.1",
+    "@vitejs/plugin-vue": "^3.0.3",
+    "ant-design-vue": "^3.2.11",
+    "less": "^4.1.3",
+    "less-loader": "^11.0.0",
+    "vite": "^3.0.7",
+    "vue": "^3.2.37",
+    "vuedraggable": "^4.1.0"
+  }
+}

@@ -1,0 +1,83 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 2909361 */
+  src: url('iconfont.woff2?t=1658738329756') format('woff2'),
+       url('iconfont.woff?t=1658738329756') format('woff'),
+       url('iconfont.ttf?t=1658738329756') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-delete:before {
+  content: "\e601";
+}
+
+.icon-arrow-down:before {
+  content: "\eb6d";
+}
+
+.icon-redo:before {
+  content: "\e628";
+}
+
+.icon-undo:before {
+  content: "\e633";
+}
+
+.icon-warning:before {
+  content: "\e64f";
+}
+
+.icon-user:before {
+  content: "\e68b";
+}
+
+.icon-brush:before {
+  content: "\e891";
+}
+
+.icon-layer:before {
+  content: "\e86e";
+}
+
+.icon-zuocopy:before {
+  content: "\e74c";
+}
+
+.icon-collapsed:before {
+  content: "\e734";
+}
+
+.icon-more:before {
+  content: "\e62d";
+}
+
+.icon-upload:before {
+  content: "\e6eb";
+}
+
+.icon-resource:before {
+  content: "\e740";
+}
+
+.icon-text:before {
+  content: "\e682";
+}
+
+.icon-archived:before {
+  content: "\e600";
+}
+
+.icon-help:before {
+  content: "\e657";
+}
+
+.icon-template:before {
+  content: "\e627";
+}
+

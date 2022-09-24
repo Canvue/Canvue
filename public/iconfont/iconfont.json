@@ -1,0 +1,128 @@
+{
+  "id": "2909361",
+  "name": "瓷画（平面设计）",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1270",
+      "name": "错误",
+      "font_class": "delete",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "4175511",
+      "name": "下箭头",
+      "font_class": "arrow-down",
+      "unicode": "eb6d",
+      "unicode_decimal": 60269
+    },
+    {
+      "icon_id": "167455",
+      "name": "redo",
+      "font_class": "redo",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "167469",
+      "name": "undo",
+      "font_class": "undo",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "410498",
+      "name": "警告",
+      "font_class": "warning",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "15838606",
+      "name": "user-filling",
+      "font_class": "user",
+      "unicode": "e68b",
+      "unicode_decimal": 59019
+    },
+    {
+      "icon_id": "25885508",
+      "name": "AI、智能大脑-03",
+      "font_class": "brush",
+      "unicode": "e891",
+      "unicode_decimal": 59537
+    },
+    {
+      "icon_id": "5838776",
+      "name": "图层",
+      "font_class": "layer",
+      "unicode": "e86e",
+      "unicode_decimal": 59502
+    },
+    {
+      "icon_id": "3234322",
+      "name": "position-左",
+      "font_class": "zuocopy",
+      "unicode": "e74c",
+      "unicode_decimal": 59212
+    },
+    {
+      "icon_id": "14666100",
+      "name": "左传",
+      "font_class": "collapsed",
+      "unicode": "e734",
+      "unicode_decimal": 59188
+    },
+    {
+      "icon_id": "5905756",
+      "name": "更多",
+      "font_class": "more",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "15687852",
+      "name": "云上传",
+      "font_class": "upload",
+      "unicode": "e6eb",
+      "unicode_decimal": 59115
+    },
+    {
+      "icon_id": "11758123",
+      "name": "拼图",
+      "font_class": "resource",
+      "unicode": "e740",
+      "unicode_decimal": 59200
+    },
+    {
+      "icon_id": "29522688",
+      "name": "20J语音转文字",
+      "font_class": "text",
+      "unicode": "e682",
+      "unicode_decimal": 59010
+    },
+    {
+      "icon_id": "1190",
+      "name": "管理",
+      "font_class": "archived",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "761309",
+      "name": "帮助",
+      "font_class": "help",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
+      "icon_id": "7171162",
+      "name": "模板管理",
+      "font_class": "template",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    }
+  ]
+}
