@@ -3,13 +3,13 @@
     <canvas ref="c">
       <slot></slot>
     </canvas>
-    <unj-loading v-if="process.loading"></unj-loading>
+    <vc-loading v-if="process.loading"></vc-loading>
   </div>
 </template>
 
 <script>
-import {ref, reactive, inject, computed, watchEffect, onMounted, onUnmounted, markRaw} from "vue";
-import {UnjLoading} from '@unjuanable/viper';
+import {computed, inject, markRaw, onMounted, onUnmounted, reactive, ref, watchEffect} from "vue";
+import {VcLoading} from '@unjuanable/vcui';
 import {useLifecycle} from "./useLifecycle";
 import {useExportHandler} from "./useExportHandler";
 import {useCenteringGuides} from "./useCenteringGuides";
@@ -19,7 +19,7 @@ import ev from "../../const/event";
 import {createUUID} from "../../libs";
 
 export default {
-  components: {UnjLoading},
+  components: {VcLoading},
   props: {
     id: {
       type: String, default() {
