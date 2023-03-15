@@ -1,6 +1,6 @@
 {
   "name": "@canvue/canvue",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": "LeeNux @lc7457",
   "license": "MIT",
   "main": "src/index.js",
