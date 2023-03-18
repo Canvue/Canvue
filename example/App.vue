@@ -1,18 +1,19 @@
 <template>
-  <test-u-v/>
+  <div class="menu">
+    <ul>
+      <li v-for="item in routes">
+        <router-link :to="item.path">{{ item.meta.label }}</router-link>
+      </li>
+    </ul>
+  </div>
+  <div class="views">
+    <router-view></router-view>
+  </div>
 </template>
 
-<script>
-import TestUV from "./components/TestUV.vue";
-
-export default {
-  name: "Example",
-  components: {TestUV},
-  setup() {
-
-  }
-}
-</script>
+<script setup>
+import {RouterView} from "vue-router"
+import {routes} from "./router.js"</script>
 
 <style>
 * {
@@ -28,7 +29,27 @@ html, body {
 #app {
   width: 100%;
   height: 100%;
+}
+
+.menu {
+  width: 300px;
+  height: 100%;
+  float: left;
+}
+
+.menu li {
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  text-indent: 2em;
+}
+
+.views {
+  width: calc(100% - 300px);
+  height: 100%;
+  float: left;
   overflow: hidden;
 }
+
 
 </style>

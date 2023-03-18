@@ -1,6 +1,6 @@
 <template>
   <div class="uv">
-    <v-uv :width="800" :height="400" ref="uv" mode="image" :lazing="false"></v-uv>
+    <v-uv :width="800" :height="400" ref="uv" mode="pattern" :lazing="true"></v-uv>
   </div>
   <div class="canvas">
     <template v-for="item in list">
