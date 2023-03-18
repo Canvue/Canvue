@@ -1,6 +1,6 @@
 {
   "name": "@canvue/canvue",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "author": "LeeNux @lc7457",
   "license": "MIT",
   "main": "src/index.js",
@@ -17,7 +17,7 @@
     "url": "https://github.com/Canvue/canvue.git"
   },
   "dependencies": {
-    "@unjuanable/jokes": "^0.2.4",
+    "@unjuanable/jokes": "^0.2.7",
     "@unjuanable/vcui": "^1.1.0",
     "aggregation": "^1.2.7",
     "fabric": "^5.3.0",

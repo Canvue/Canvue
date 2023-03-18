@@ -1,5 +1,5 @@
 import {inject} from 'vue'
-import {toDownload} from "@unjuanable/jokes";
+import {dataURLImageToFile, stringToFile, toDownload} from "@unjuanable/jokes";
 import ev from "../../const/event";
 
 export function useExportHandler(uuid = null) {
@@ -12,9 +12,9 @@ export function useExportHandler(uuid = null) {
     function exportSVG() {
         return () => {
             normalizeVT(() => {
-                const fileName = canvue.getStage(uuid).uuid + '.svg'
+                const fileName = canvue.getStage(uuid).uuid
                 const content = canvue.getStage(uuid).toSVG()
-                toDownload(content, fileName, {type: 'image/svg+xml'})
+                toDownload(stringToFile(content, fileName, 'image/svg+xml', "svg"))
             })
         }
     }
@@ -25,6 +25,13 @@ export function useExportHandler(uuid = null) {
      */
     function exportPNG() {
         return () => {
+            normalizeVT(() => {
+                const fileName = canvue.getStage(uuid).uuid
+                const dataURL = canvue.getStage(uuid).toDataURL({
+                    format: 'png',
+                })
+                toDownload(dataURLImageToFile(dataURL, fileName))
+            })
         }
     }
 
@@ -35,34 +42,23 @@ export function useExportHandler(uuid = null) {
     function exportJSON() {
         return () => {
             normalizeVT(() => {
-                const fileName = canvue.getStage(uuid).uuid + '.json'
+                const fileName = canvue.getStage(uuid).uuid
                 let content = canvue.getStage(uuid).toJSON()
                 content.width = canvue.getStage(uuid).width
                 content.height = canvue.getStage(uuid).height
                 if (typeof content === 'object') {
                     content = JSON.stringify(content)
                 }
-                toDownload(content, fileName, {type: 'application/json'})
+                toDownload(stringToFile(content, fileName, "application/json"))
             })
         }
     }
 
     /**
-     * 标准化画布尺寸
+     * 导出前标准化处理
      * @param callback
      */
     function normalizeVT(callback) {
-        // const VT = canvue.getStage(uuid).viewportTransform
-        // const normalVT = VT.concat()
-        // normalVT[0] = normalVT[3] = 1
-        //
-        // canvue.getStage(uuid).setWidth(canvue.getStage(uuid).width / VT[0])
-        // canvue.getStage(uuid).setHeight(canvue.getStage(uuid).height / VT[3])
-        // canvue.getStage(uuid).setViewportTransform(normalVT)
-        // callback && callback()
-        // canvue.getStage(uuid).setWidth(canvue.getStage(uuid).width * VT[0])
-        // canvue.getStage(uuid).setHeight(canvue.getStage(uuid).height * VT[3])
-        // canvue.getStage(uuid).setViewportTransform(VT)
         callback && callback()
     }
 
