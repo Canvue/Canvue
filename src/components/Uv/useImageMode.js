@@ -2,7 +2,7 @@ import {inject, markRaw} from "vue";
 import {clipPathShape} from "./mask";
 import ev from "../../const/event";
 
-export function useImageModel() {
+export function useImageMode() {
     const canvue = inject('canvue')
     const stages = markRaw({})
 
@@ -31,6 +31,7 @@ export function useImageModel() {
         const refresh = () => {
             img.src = stage.toDataURL()
             image.set('dirty', true);
+            canvue.emit(ev.stage.rendered.handler)
         }
         stage.on('object:modified', refresh)
         canvue.on(ev.stage.added.handler, refresh, uuid)

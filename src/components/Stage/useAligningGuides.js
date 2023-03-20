@@ -194,7 +194,7 @@ export function useAligningGuides() {
         });
 
         data.stage.on('before:render', () => {
-            data.stage?.clearContext(data.stage.contextTop);
+            data.stage.contextTop && data.stage?.clearContext(data.stage.contextTop);
         });
 
         data.stage.on('after:render', () => {

@@ -35,6 +35,8 @@ html, body {
   width: 300px;
   height: 100%;
   float: left;
+  background-color: #fdfdfd;
+  overflow-y: scroll;
 }
 
 .menu li {
@@ -42,6 +44,7 @@ html, body {
   height: 30px;
   line-height: 30px;
   text-indent: 2em;
+  border-bottom: 1px dashed #dddddd;
 }
 
 .views {

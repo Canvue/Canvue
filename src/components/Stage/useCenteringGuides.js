@@ -81,7 +81,7 @@ export function useCenteringGuides() {
         });
 
         data.stage.on('before:render', () => {
-            data.stage?.clearContext(data.stage?.contextTop);
+            data.stage.contextTop && data.stage?.clearContext(data.stage?.contextTop);
         });
 
         data.stage.on('after:render', () => {
@@ -94,7 +94,6 @@ export function useCenteringGuides() {
         });
 
         data.stage.on('mouse:up', () => {
-            // clear these values, to stop drawing guidelines once mouse is up
             isInVerticalCenter = isInHorizontalCenter = null;
             data.stage.renderAll();
         });

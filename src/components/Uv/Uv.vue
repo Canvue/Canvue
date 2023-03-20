@@ -7,7 +7,7 @@
 <script>
 import {inject, ref, onMounted, markRaw} from "vue";
 import {usePatternMode} from "./usePatternMode";
-import {useImageModel} from "./useImageModel";
+import {useImageMode} from "./useImageMode";
 import {createView, createUUID} from '../../libs'
 import ev from "../../const/event";
 
@@ -37,7 +37,7 @@ export default {
       viewport: null
     })
 
-    const {stages, init} = props.mode === 'pattern' ? usePatternMode() : useImageModel()
+    const {stages, init} = props.mode === 'pattern' ? usePatternMode() : useImageMode()
 
     const bindStage = (uuid, width, height, offsetX, offsetY, shape = 'rect') => {
       /** 监听：舞台加载 **/
