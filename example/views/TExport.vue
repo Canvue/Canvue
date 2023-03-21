@@ -16,7 +16,6 @@
 import {inject, onMounted, ref} from "vue";
 import ev from "../../src/const/event.js";
 
-
 const canvue = inject('canvue')
 const uv = ref(null)
 const stage = ref(null) // ref 数组
@@ -40,7 +39,9 @@ onMounted(() => {
       originY: 'center',
     }),
   })
+
   img.onload = () => {
+    console.log("img")
     stage.value.data.stage.add(image)
   }
 })

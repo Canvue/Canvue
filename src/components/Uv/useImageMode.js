@@ -30,11 +30,17 @@ export function useImageMode() {
         })
         const refresh = () => {
             img.src = stage.toDataURL()
-            image.set('dirty', true);
-            canvue.emit(ev.stage.rendered.handler)
+            img.onload = () => {
+                image.set('dirty', true);
+                canvue.emit(ev.stage.rendered.handler, stage, uuid)
+            }
         }
-        stage.on('object:modified', refresh)
+
         canvue.on(ev.stage.added.handler, refresh, uuid)
+        canvue.on(ev.stage.modified.handler, refresh, uuid)
+
+        refresh()
+
         return image
     }
 

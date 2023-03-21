@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import {inject, ref, onMounted, markRaw} from "vue";
+import {inject, markRaw, onMounted, ref} from "vue";
 import {usePatternMode} from "./usePatternMode";
 import {useImageMode} from "./useImageMode";
-import {createView, createUUID} from '../../libs'
+import {createUUID, createView} from '../../libs'
 import ev from "../../const/event";
 
 export default {
@@ -38,13 +38,12 @@ export default {
     })
 
     const {stages, init} = props.mode === 'pattern' ? usePatternMode() : useImageMode()
-
     const bindStage = (uuid, width, height, offsetX, offsetY, shape = 'rect') => {
       /** 监听：舞台加载 **/
       canvue.on(ev.stage.loaded.handler, onChange, uuid)
+      canvue.on(ev.stage.added.handler, onChange, uuid)
       /** 监听：舞台渲染 OR 舞台开对象发生修改**/
-      props.lazing ? canvue.on(ev.stage.modified.handler, onChange, uuid) :
-          canvue.on(ev.stage.rendered.handler, onChange, uuid)
+      props.lazing ? canvue.on(ev.stage.modified.handler, onChange, uuid) : canvue.on(ev.stage.rendered.handler, onChange, uuid)
 
       /**
        * 监听内容修改
@@ -54,9 +53,8 @@ export default {
         if (!stages.hasOwnProperty(uuid)) {
           const area = init(stage, uuid, width, height, offsetX, offsetY, shape)
           data.viewport.add(area)
-          data.viewport.requestRenderAll()
         }
-        data.viewport.renderAll()
+        data.viewport.requestRenderAll()
       }
     }
 
