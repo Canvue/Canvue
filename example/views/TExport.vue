@@ -5,7 +5,7 @@
     <input type="button" value="OBJ" @click="exportOBJ"/>
   </p>
   <div class="uv">
-    <v-uv :width="800" :height="400" ref="uv" mode="image" :lazing="true"></v-uv>
+    <v-projected :width="800" :height="400" ref="uv" mode="image" :lazing="true"></v-projected>
   </div>
   <div class="canvas">
     <v-stage class="left" :withGuideLine="true" ref="stage" id="stage" :width="800" :height="400" active></v-stage>
@@ -41,20 +41,16 @@ onMounted(() => {
   })
 
   img.onload = () => {
-    console.log("img")
     stage.value.data.stage.add(image)
   }
 })
 const exportPNG = () => {
-  console.log(canvue)
   canvue.emit(ev.stage.exportPNG.handler)
 }
 const exportSVG = () => {
-  console.log("svg")
   canvue.emit(ev.stage.exportSVG.handler)
 }
 const exportOBJ = () => {
-  console.log("obj")
   canvue.emit(ev.stage.export.handler)
 }
 </script>

@@ -18,6 +18,10 @@ import {useAligningGuides} from "./useAligningGuides";
 import ev from "../../const/event";
 import {createUUID} from "../../libs";
 
+/**
+ * 舞台组件
+ *    进行图层操作的主要画布
+ */
 export default {
   components: {VcLoading},
   props: {

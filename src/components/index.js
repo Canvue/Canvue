@@ -1,12 +1,12 @@
 import Stage from './Stage'
+import Projected from './Projected'
 import Layer from './Layer'
-import Uv from './Uv'
 
 // Components
 const components = [
     {name: 'Stage', component: Stage},
     {name: 'Layer', component: Layer},
-    {name: 'Uv', component: Uv},
+    {name: 'Projected', component: Projected},
 ]
 
 function InstallComponents(app, prefix = 'V') {
@@ -16,5 +16,5 @@ function InstallComponents(app, prefix = 'V') {
 }
 
 export {
-    Stage, Layer, Uv, InstallComponents
+    Stage, Layer, Projected, InstallComponents
 }

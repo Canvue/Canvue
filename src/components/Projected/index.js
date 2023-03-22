@@ -1,4 +1,4 @@
-import Uv from './Uv.vue'
+import Uv from './Projected.vue'
 
 Uv.install = function (app) {
     app.component(Uv.name, Uv);

@@ -1,5 +1,5 @@
 <template>
-  <canvas :id="id" ref="uv">
+  <canvas :id="id" ref="projected">
     <slot></slot>
   </canvas>
 </template>
@@ -11,8 +11,12 @@ import {useImageMode} from "./useImageMode";
 import {createUUID, createView} from '../../libs'
 import ev from "../../const/event";
 
+/**
+ * 舞台图像投影的画布
+ *    可以对应多个不同的舞台，将他们的投影组合在一起
+ */
 export default {
-  name: "Uv",
+  name: "Projected",
   props: {
     id: {
       type: String, default() {
@@ -32,7 +36,7 @@ export default {
   },
   setup(props, ctx) {
     const canvue = inject('canvue') // global variable
-    const uv = ref(null) // Canvas DOM
+    const projected = ref(null) // Canvas DOM
     const data = markRaw({
       viewport: null
     })
@@ -59,13 +63,13 @@ export default {
     }
 
     onMounted(() => {
-      data.viewport = createView(uv.value, props.id, props.config)
+      data.viewport = createView(projected.value, props.id, props.config)
       data.viewport.setWidth(props.width)
       data.viewport.setHeight(props.height)
       data.viewport.setBackgroundColor(props.bgColor)
     })
 
-    return {uv, bindStage}
+    return {projected, bindStage}
   }
 }
 </script>

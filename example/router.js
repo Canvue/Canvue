@@ -3,9 +3,9 @@ import {createRouter, createWebHashHistory} from 'vue-router'
 export const routes = [
     {
         path: '/',
-        component: () => import('./views/TUV.vue'),
+        component: () => import('./views/TProjected.vue'),
         name: 'home',
-        meta: {label: "UV"}
+        meta: {label: "Projected"}
     },
     {
         path: '/export',
