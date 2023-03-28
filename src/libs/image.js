@@ -27,7 +27,8 @@ export function circle(img, opts) {
         originY: 'center',
     }
     const options = Object.assign({}, _options, opts)
-    return new fabric.Image(img, {
+    const target = img.isType && img.isType("image") ? img._element : img
+    return new fabric.Image(target, {
         width: options.width,
         height: options.height,
         left: 0,

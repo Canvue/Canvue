@@ -43,25 +43,6 @@ onMounted(() => {
   areas['aaa'].data.stage.add(new fabric.Rect({width: 400, height: 400, left: 100, top: 100, fill: 'red'}))
   areas['bbb'].data.stage.add(new fabric.Rect({width: 400, height: 400, fill: 'blue'}))
 
-  // const img = new Image()
-  // img.src = '/public/images/jiangxi.jpeg'
-  //
-  // const image = new fabric.Image(img, {
-  //   width: 400,
-  //   height: 400,
-  //   left: 0,
-  //   top: 0,
-  //   dirty: true,
-  //   clipPath: new fabric.Ellipse({
-  //     rx: 200,
-  //     ry: 200,
-  //     originX: 'center',
-  //     originY: 'center',
-  //   }),
-  // })
-  // img.onload = () => {
-  //   areas['aaa'].data.stage.add(image)
-  // }
 })
 </script>
 

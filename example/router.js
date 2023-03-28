@@ -8,6 +8,12 @@ export const routes = [
         meta: {label: "Projected"}
     },
     {
+        path: '/image',
+        component: () => import('./views/TImage.vue'),
+        name: 'image',
+        meta: {label: "图片加载"}
+    },
+    {
         path: '/export',
         component: () => import('./views/TExport.vue'),
         name: 'export',
