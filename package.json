@@ -1,11 +1,12 @@
 {
   "name": "@canvue/canvue",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "author": "LeeNux @lc7457",
   "license": "MIT",
   "main": "src/index.js",
   "files": [
-    "src"
+    "src",
+    "brushes"
   ],
   "scripts": {
     "dev": "vite",

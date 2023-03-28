@@ -1,6 +1,4 @@
-var GDefault = {
+const GDefault = {
     name: "canvue",
-    brush: [{
-
-    }]
+    brush: [{}]
 }

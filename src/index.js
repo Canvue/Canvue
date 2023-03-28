@@ -30,4 +30,4 @@ export {
 
 export * from './libs'
 export * from './libs/objects'
-export * from './libs/loader'
+export * from './libs/image'
