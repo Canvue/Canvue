@@ -15,8 +15,8 @@ export function loadFromURL(src, callback) {
 
 /**
  * 绘制圆形图片
- * @param img
- * @param opts
+ * @param img [fabric.Image | Image]
+ * @param opts {width,height,originX,originY}
  * @returns {*}
  */
 export function circle(img, opts) {
