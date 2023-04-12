@@ -34,6 +34,7 @@ export default {
             }
         }
     },
+    emits: ["change"],
     setup(props, ctx) {
         const canvue = inject('canvue') // global variable
         const projected = ref(null) // Canvas DOM
@@ -54,12 +55,13 @@ export default {
              * @param stage
              */
             function onChange(stage) {
-                if (!stages.hasOwnProperty(uuid)) {
-                    const area = init(stage, uuid, width, height, offsetX, offsetY, shape)
-                    data.viewport.add(area)
-                }
                 if (data.viewport) {
+                    if (!stages.hasOwnProperty(uuid)) {
+                        const area = init(stage, uuid, width, height, offsetX, offsetY, shape)
+                        data.viewport.add(area)
+                    }
                     data.viewport.requestRenderAll()
+                    ctx.emit("change", uuid)
                 }
             }
         }

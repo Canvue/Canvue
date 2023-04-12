@@ -1,12 +1,13 @@
 <template>
-  <div class="uv">
-    <v-projected :width="800" :height="400" ref="uv" mode="image" :lazing="false"></v-projected>
-  </div>
-  <div class="canvas">
-    <template v-for="item in list">
-      <v-stage class="left" :withGuideLine="false" :ref="(el)=>getArea(el,item.id)" :id="item.id" :width="item.width" :height="item.height"></v-stage>
-    </template>
-  </div>
+    <div class="uv">
+        <v-projected :width="800" :height="400" ref="uv" mode="image" :lazing="true" @change="onChange"></v-projected>
+    </div>
+    <div class="canvas">
+        <template v-for="item in list">
+            <v-stage class="left" :withGuideLine="false" :ref="(el)=>getArea(el,item.id)" :id="item.id"
+                     :width="item.width" :height="item.height"></v-stage>
+        </template>
+    </div>
 </template>
 
 <script setup>
@@ -22,32 +23,36 @@ const areas = {} // ref 数组
  * @param el
  */
 const getArea = (el, id) => {
-  if (el) {
-    areas[id] = el;
-  }
+    if (el) {
+        areas[id] = el;
+    }
+}
+
+const onChange = () => {
+    console.log("change")
 }
 /**
  * 测试数据
  * @type {UnwrapNestedRefs<[{shape: string, width: number, x: number, y: number, id: string, height: number},{shape: string, width: number, x: number, y: number, id: string, height: number}]>}
  */
 const list = reactive([{
-  id: 'aaa', width: 400, height: 400, x: 0, y: 0, shape: 'ellipse'
+    id: 'aaa', width: 400, height: 400, x: 0, y: 0, shape: 'ellipse'
 }, {
-  id: 'bbb', width: 400, height: 400, x: 400, y: 0, shape: 'rect'
+    id: 'bbb', width: 400, height: 400, x: 400, y: 0, shape: 'rect'
 }])
 
 onMounted(() => {
-  for (let item of list) {
-    uv.value.bindStage(item.id, item.width, item.height, item.x, item.y, item.shape)
-  }
-  areas['aaa'].data.stage.add(new fabric.Rect({width: 400, height: 400, left: 100, top: 100, fill: 'red'}))
-  areas['bbb'].data.stage.add(new fabric.Rect({width: 400, height: 400, fill: 'blue'}))
+    for (let item of list) {
+        uv.value.bindStage(item.id, item.width, item.height, item.x, item.y, item.shape)
+    }
+    areas['aaa'].data.stage.add(new fabric.Rect({width: 400, height: 400, left: 100, top: 100, fill: 'red'}))
+    areas['bbb'].data.stage.add(new fabric.Rect({width: 400, height: 400, fill: 'blue'}))
 
 })
 </script>
 
 <style>
 .left {
-  float: left;
+    float: left;
 }
 </style>
