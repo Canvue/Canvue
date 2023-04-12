@@ -38,6 +38,7 @@ export function useImageMode() {
 
         canvue.on(ev.stage.added.handler, refresh, uuid)
         canvue.on(ev.stage.modified.handler, refresh, uuid)
+        canvue.on(ev.stage.removed.handler, refresh, uuid)
 
         refresh()
 

@@ -1,12 +1,17 @@
 <template>
-    <div class="uv">
-        <v-projected :width="800" :height="400" ref="uv" mode="image" :lazing="true" @change="onChange"></v-projected>
+    <div class="uv" style="zoom:20%">
+        <v-projected :width="1024" :height="1024" ref="uv" mode="image" :lazing="false"
+                     @change="onChange"></v-projected>
     </div>
     <div class="canvas">
         <template v-for="item in list">
             <v-stage class="left" :withGuideLine="false" :ref="(el)=>getArea(el,item.id)" :id="item.id"
                      :width="item.width" :height="item.height"></v-stage>
         </template>
+    </div>
+    <div class="operation">
+        <input type="button" @click="add(0)" value="添加"/>
+        <input type="button" @click="del(0)" value="删除"/>
     </div>
 </template>
 
@@ -29,7 +34,8 @@ const getArea = (el, id) => {
 }
 
 const onChange = () => {
-    console.log("change")
+    uv.value.render()
+    // uv.value.data.stage.renderAll()
 }
 /**
  * 测试数据
@@ -41,13 +47,25 @@ const list = reactive([{
     id: 'bbb', width: 400, height: 400, x: 400, y: 0, shape: 'rect'
 }])
 
+const res = [
+    new fabric.Rect({width: 400, height: 400, left: 100, top: 100, fill: 'red'}),
+    new fabric.Rect({width: 400, height: 400, fill: 'blue'})
+]
+
+const del = (id) => {
+    areas['aaa'].data.stage.remove(res[id])
+}
+
+const add = (id) => {
+    areas['aaa'].data.stage.add(res[id])
+}
+
 onMounted(() => {
     for (let item of list) {
         uv.value.bindStage(item.id, item.width, item.height, item.x, item.y, item.shape)
     }
-    areas['aaa'].data.stage.add(new fabric.Rect({width: 400, height: 400, left: 100, top: 100, fill: 'red'}))
-    areas['bbb'].data.stage.add(new fabric.Rect({width: 400, height: 400, fill: 'blue'}))
-
+    areas['aaa'].data.stage.add(res[0])
+    areas['bbb'].data.stage.add(res[1])
 })
 </script>
 

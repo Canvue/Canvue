@@ -67,6 +67,12 @@ export default {
             }
         }
 
+        const render = () => {
+            if (data.viewport) {
+                data.viewport.renderAll()
+            }
+        }
+
         onMounted(() => {
             data.viewport = createView(projected.value, props.id, props.config)
             data.viewport.setWidth(props.width)
@@ -74,7 +80,7 @@ export default {
             data.viewport.setBackgroundColor(props.bgColor)
         })
 
-        return {projected, bindStage}
+        return {data, render, projected, bindStage}
     }
 }
 </script>
