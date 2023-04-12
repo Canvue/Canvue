@@ -47,6 +47,7 @@ export default {
             /** 监听：舞台加载 **/
             canvue.on(ev.stage.loaded.handler, onChange, uuid)
             canvue.on(ev.stage.added.handler, onChange, uuid)
+            canvue.on(ev.stage.removed.handler, onChange, uuid)
             /** 监听：舞台渲染 OR 舞台开对象发生修改**/
             props.lazing ? canvue.on(ev.stage.modified.handler, onChange, uuid) : canvue.on(ev.stage.rendered.handler, onChange, uuid)
 
