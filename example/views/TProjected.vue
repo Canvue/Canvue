@@ -1,6 +1,6 @@
 <template>
     <div class="uv" style="zoom:20%">
-        <v-projected :width="1024" :height="1024" ref="uv" mode="image" :delay="0" :stages="areas"
+        <v-projected :width="1024" :height="1024" ref="uv" mode="pattern" :delay="0" :stages="areas"
                      @change="onChange">
         </v-projected>
     </div>
@@ -60,9 +60,9 @@ const onChange = () => {
  * @type {UnwrapNestedRefs<[{shape: string, width: number, x: number, y: number, id: string, height: number},{shape: string, width: number, x: number, y: number, id: string, height: number}]>}
  */
 const list = reactive([{
-    id: 'aaa', width: 450, height: 450, offsetX: 0, offsetY: 0, shape: 'ellipse'
+    id: 'aaa', width: 300, height: 300, offsetX: 0, offsetY: 0, shape: 'ellipse'
 }, {
-    id: 'bbb', width: 400, height: 400, offsetX: 450, offsetY: 0, shape: 'rect'
+    id: 'bbb', width: 300, height: 300, offsetX: 450, offsetY: 0, shape: 'rect'
 }])
 
 const res = [

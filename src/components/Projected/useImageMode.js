@@ -31,7 +31,7 @@ export function useImageMode(delay) {
                 image.set('dirty', true);
                 callback && callback()
             }
-        })
+        }, {noLeading: true})
 
         canvue.on(ev.stage.loaded.handler, refreshFunc, stage.uuid)
         canvue.on(ev.stage.added.handler, refreshFunc, stage.uuid)
