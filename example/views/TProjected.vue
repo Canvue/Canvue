@@ -1,6 +1,6 @@
 <template>
     <div class="uv" style="zoom:20%">
-        <v-projected ref="projected" :width="1024" :height="1024" mode="pattern" :delay="0"
+        <v-projected ref="projected" :width="1024" :height="1024" mode="image" :delay="0"
                      @change="onChange"></v-projected>
     </div>
     <div class="canvas">
@@ -68,7 +68,7 @@ onMounted(() => {
         e.preventDefault();
         res[0].objectCaching = false;
         res[0].scale(res[0].scaleX + (e.wheelDeltaY / 10000))
-        canvue.emit(ev.stage.modified.handler, stages['aaa'].data.stage, stages['aaa'].uuid)
+        canvue.emit(ev.stage.modified.handler, null, 'aaa')
         stages['aaa'].data.stage.renderAll()
         return false
     }
