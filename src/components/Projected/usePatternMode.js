@@ -1,31 +1,39 @@
-import {markRaw} from "vue";
 import {patternMaskShape} from './mask'
+import {noop} from "@unjuanable/jokes";
+import {inject} from "vue";
+import ev from "../../const/event";
+import {throttle} from 'throttle-debounce';
 
-export function usePatternMode(viewport) {
-    const stages = markRaw({})
-
+export function usePatternMode(delay) {
+    const canvue = inject('canvue') // global variable
     /**
-     * 初始化绑定舞台数据
+     * 绑定舞台数据
      * @param {object} stage - 舞台
-     * @param {string} uuid - 舞台唯一ID
-     * @param {number} width - 舞台宽度
-     * @param {number} height - 舞台高度
-     * @param {number} offsetX - 舞台内容相对UV的left偏移量
-     * @param {number} offsetY - 舞台内容相对UV的top偏移量
-     * @param {string}[shape=rect] shape - 最终结果pattern表现的形状
+     * @param {function} callback
      */
-    const init = (stage, uuid, width, height, offsetX, offsetY, shape = 'rect') => {
-        stages[uuid] = {uuid, stage, width, height, offsetX, offsetY}
+    const bind = (stage, callback = noop) => {
         const pattern = new fabric.Pattern({
-            source: stage.getElement(),
+            source: stage.el.data.stage,
             repeat: 'no-repeat',
             crossOrigin: 'anonymous',
         });
-        shape = patternMaskShape.hasOwnProperty(shape) ? shape : 'rect' // 检测形状类型
-        const stdObj = patternMaskShape[shape](width, height, offsetX, offsetY) // 创建形状
-        stdObj.set('fill', pattern)
-        return stdObj
+        const shape = patternMaskShape.hasOwnProperty(stage.shape) ? stage.shape : 'rect' // 检测形状类型
+        const shapeObj = patternMaskShape[shape](stage.width, stage.height, stage.offsetX, stage.offsetY) // 创建形状
+        shapeObj.set('fill', pattern)
+
+        const refreshFunc = throttle(delay, () => {
+            callback && callback()
+        })
+        // add event
+        canvue.on(ev.stage.loaded.handler, refreshFunc, stage.uuid)
+        canvue.on(ev.stage.added.handler, refreshFunc, stage.uuid)
+        canvue.on(ev.stage.removed.handler, refreshFunc, stage.uuid)
+        canvue.on(ev.stage.modified.handler, refreshFunc, stage.uuid)
+
+
+        callback && callback()
+        return shapeObj
     }
 
-    return {stages, init}
+    return {bind}
 }

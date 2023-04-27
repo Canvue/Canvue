@@ -120,6 +120,18 @@ export default {
             data.stage.on('object:added', () => {
                 canvue.emit(ev.stage.added.handler, data.stage, props.id)
             })
+            data.stage.on('object:rotating', () => {
+                canvue.emit(ev.stage.modified.handler, data.stage, props.id)
+            })
+            data.stage.on('object:scaling', () => {
+                canvue.emit(ev.stage.modified.handler, data.stage, props.id)
+            })
+            data.stage.on('object:moving', () => {
+                canvue.emit(ev.stage.modified.handler, data.stage, props.id)
+            })
+            data.stage.on('object:skewing', () => {
+                canvue.emit(ev.stage.modified.handler, data.stage, props.id)
+            })
             data.stage.on('object:modified', () => {
                 canvue.emit(ev.stage.modified.handler, data.stage, props.id)
             })

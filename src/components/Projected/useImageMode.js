@@ -1,50 +1,45 @@
-import {inject, markRaw} from "vue";
+import {inject} from "vue";
 import {clipPathShape} from "./mask";
 import ev from "../../const/event";
+import {noop} from "@unjuanable/jokes";
+import {throttle} from "throttle-debounce";
 
-export function useImageMode() {
+export function useImageMode(delay) {
     const canvue = inject('canvue')
-    const stages = markRaw({})
 
     /**
-     * 初始化绑定舞台数据
+     * 绑定舞台数据
      * @param {object} stage - 舞台
-     * @param {string} uuid - 舞台唯一ID
-     * @param {number} width - 舞台宽度
-     * @param {number} height - 舞台高度
-     * @param {number} offsetX - 舞台内容相对UV的left偏移量
-     * @param {number} offsetY - 舞台内容相对UV的top偏移量
-     * @param {string}[shape=rect] shape - 最终结果pattern表现的形状
+     * @param {function} callback
      */
-    const init = (stage, uuid, width, height, offsetX, offsetY, shape = 'rect') => {
-        stages[uuid] = {uuid, stage, width, height, offsetX, offsetY}
-        shape = clipPathShape.hasOwnProperty(shape) ? shape : 'rect' // 检测形状类型
-        const stdObj = clipPathShape[shape](width, height, offsetX, offsetY) // 创建形状
+    const bind = (stage, callback = noop) => {
+        const shape = clipPathShape.hasOwnProperty(stage.shape) ? stage.shape : 'rect' // 检测形状类型
+        const shapeObj = clipPathShape[shape](stage.width, stage.height, stage.offsetX, stage.offsetY) // 创建形状
         const img = new Image()
         const image = new fabric.Image(img, {
-            width,
-            height,
-            left: offsetX,
-            top: offsetY,
-            clipPath: stdObj
+            width: stage.width,
+            height: stage.height,
+            left: stage.offsetX,
+            top: stage.offsetY,
+            clipPath: shapeObj
         })
-        const refresh = () => {
-            img.src = stage.toDataURL()
+        const refreshFunc = throttle(delay, () => {
+            img.src = stage.el.data.stage.toDataURL()
             img.onload = () => {
                 image.set('dirty', true);
-                canvue.emit(ev.stage.rendered.handler, stage, uuid)
+                callback && callback()
             }
-        }
+            callback && callback()
+        })
 
-        canvue.on(ev.stage.added.handler, refresh, uuid)
-        canvue.on(ev.stage.modified.handler, refresh, uuid)
-        canvue.on(ev.stage.removed.handler, refresh, uuid)
-
-        refresh()
+        canvue.on(ev.stage.loaded.handler, refreshFunc, stage.uuid)
+        canvue.on(ev.stage.added.handler, refreshFunc, stage.uuid)
+        canvue.on(ev.stage.removed.handler, refreshFunc, stage.uuid)
+        canvue.on(ev.stage.modified.handler, refreshFunc, stage.uuid)
 
         return image
     }
 
-    return {stages, init}
+    return {bind}
 
 }

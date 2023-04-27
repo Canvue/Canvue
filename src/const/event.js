@@ -27,6 +27,7 @@ const ev = {
         modified: {handler: 'stage:{uuid}:modified'}, // 监听舞台中图层对象状态变化
         rendering: {handler: 'stage:{uuid}:rendering'}, // 监听舞台开始进行渲染
         rendered: {handler: 'stage:{uuid}:rendered'}, // 监听舞台渲染完当前帧
+        projected: {handler: 'stage:{uuid}:projected'}
     },
     /**
      * 图层事件

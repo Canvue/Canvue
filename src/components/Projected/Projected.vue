@@ -1,15 +1,14 @@
 <template>
-    <canvas :id="id" ref="projected">
+    <canvas v-show="show" :id="id" ref="projected">
         <slot></slot>
     </canvas>
 </template>
 
 <script>
-import {inject, markRaw, onMounted, ref} from "vue";
+import {markRaw, onMounted, ref} from "vue";
 import {usePatternMode} from "./usePatternMode";
 import {useImageMode} from "./useImageMode";
 import {createUUID, createView} from '../../libs'
-import ev from "../../const/event";
 
 /**
  * 舞台图像投影的画布
@@ -23,49 +22,31 @@ export default {
                 return createUUID()
             }
         },
+        show: {type: Boolean, default: true},
+        teleport: {type: String},
         config: {type: Object},
         width: {type: Number, default: 1024},
         height: {type: Number, default: 1024},
         bgColor: {type: String, default: 'rgba(255,255,255.0)'},
-        lazing: {type: Boolean, default: false},
+        delay: {type: Number, default: 0},
         mode: {
             type: String, default: 'pattern', validator(value) {
                 return ['pattern', 'image'].includes(value);
             }
-        }
+        },
+        stages: {type: Object}
     },
     emits: ["change"],
     setup(props, ctx) {
-        const canvue = inject('canvue') // global variable
         const projected = ref(null) // Canvas DOM
         const data = markRaw({
-            viewport: null
+            viewport: null,
         })
-
-        const {stages, init} = props.mode === 'pattern' ? usePatternMode() : useImageMode()
-        const bindStage = (uuid, width, height, offsetX, offsetY, shape = 'rect') => {
-            /** 监听：舞台加载 **/
-            canvue.on(ev.stage.loaded.handler, onChange, uuid)
-            canvue.on(ev.stage.added.handler, onChange, uuid)
-            canvue.on(ev.stage.removed.handler, onChange, uuid)
-            /** 监听：舞台渲染 OR 舞台开对象发生修改**/
-            props.lazing ? canvue.on(ev.stage.modified.handler, onChange, uuid) : canvue.on(ev.stage.rendered.handler, onChange, uuid)
-
-            /**
-             * 监听内容修改
-             * @param stage
-             */
-            function onChange(stage) {
-                if (data.viewport) {
-                    if (!stages.hasOwnProperty(uuid)) {
-                        const area = init(stage, uuid, width, height, offsetX, offsetY, shape)
-                        data.viewport.add(area)
-                    }
-                    data.viewport.requestRenderAll()
-                    ctx.emit("change", uuid)
-                }
-            }
+        const defaultStageValue = {
+            uuid: null, el: null, width: 0, height: 0, offsetX: 0, offsetY: 0, shape: 'rect'
         }
+
+        const {bind} = props.mode === 'pattern' ? usePatternMode(props.delay) : useImageMode(props.delay)
 
         const render = () => {
             if (data.viewport) {
@@ -78,9 +59,18 @@ export default {
             data.viewport.setWidth(props.width)
             data.viewport.setHeight(props.height)
             data.viewport.setBackgroundColor(props.bgColor)
+            for (let key in props.stages) {
+                let stage = Object.assign({}, defaultStageValue, props.stages[key])
+                let area = bind(stage, () => {
+                    console.log("render")
+                    data.viewport.requestRenderAll()
+                    ctx.emit("change", stage.uuid)
+                })
+                data.viewport.add(area)
+            }
         })
 
-        return {data, render, projected, bindStage}
+        return {data, render, projected, bind}
     }
 }
 </script>
