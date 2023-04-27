@@ -23,7 +23,6 @@ export default {
             }
         },
         show: {type: Boolean, default: true},
-        teleport: {type: String},
         config: {type: Object},
         width: {type: Number, default: 1024},
         height: {type: Number, default: 1024},
@@ -34,7 +33,6 @@ export default {
                 return ['pattern', 'image'].includes(value);
             }
         },
-        stages: {type: Object}
     },
     emits: ["change"],
     setup(props, ctx) {
@@ -42,35 +40,39 @@ export default {
         const data = markRaw({
             viewport: null,
         })
-        const defaultStageValue = {
+        const defaultStageOpts = {
             uuid: null, el: null, width: 0, height: 0, offsetX: 0, offsetY: 0, shape: 'rect'
         }
 
         const {bind} = props.mode === 'pattern' ? usePatternMode(props.delay) : useImageMode(props.delay)
+
+        /**
+         * 绑定Stage组件
+         * @param {string} uuid StageUUID
+         * @param {object|null} el StageRef
+         * @param {number} width 宽度
+         * @param {number} height 高度
+         * @param {number} offsetX X偏移量
+         * @param {number} offsetY Y偏移量
+         * @param {string} shape 形状，默认：rect
+         */
+        const bindStage = (uuid, el, width, height, offsetX, offsetY, shape) => {
+            const stage = Object.assign({}, defaultStageOpts, {uuid, el, width, height, offsetX, offsetY, shape})
+            let area = bind(stage, () => {
+                data.viewport.renderAll()
+                ctx.emit("change", uuid)
+            })
+            data.viewport.add(area)
+        }
 
         onMounted(() => {
             data.viewport = createView(projected.value, props.id, props.config)
             data.viewport.setWidth(props.width)
             data.viewport.setHeight(props.height)
             data.viewport.setBackgroundColor(props.bgColor)
-            data.viewport.on()
         })
 
-        watch([() => props.stages, projected], () => {
-            if (projected.value) {
-                data.viewport.clear()
-                for (let key in props.stages) {
-                    let stage = Object.assign({}, defaultStageValue, props.stages[key])
-                    let area = bind(stage, () => {
-                        data.viewport.renderAll()
-                        ctx.emit("change", stage.uuid)
-                    })
-                    data.viewport.add(area)
-                }
-            }
-        }, {immediate: true})
-
-        return {data, projected, bind}
+        return {data, projected, bindStage}
     }
 }
 </script>

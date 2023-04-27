@@ -1,10 +1,10 @@
-import Uv from './Projected.vue'
+import Projected from './Projected.vue'
 
-Uv.install = function (app) {
-    app.component(Uv.name, Uv);
+Projected.install = function (app) {
+    app.component(Projected.name, Projected);
 };
 
 /**
  * 图层资源
  */
-export default Uv
+export default Projected

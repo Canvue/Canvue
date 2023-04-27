@@ -24,7 +24,7 @@ export function usePatternMode(delay) {
 
         const refreshFunc = throttle(delay, () => {
             callback && callback()
-        })
+        }, {noLeading: true})
 
         // add event
         canvue.on(ev.stage.loaded.handler, refreshFunc, stage.uuid)

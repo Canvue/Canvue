@@ -1,12 +1,11 @@
 <template>
     <div class="uv" style="zoom:20%">
-        <v-projected :width="1024" :height="1024" ref="uv" mode="pattern" :delay="0" :stages="areas"
-                     @change="onChange">
-        </v-projected>
+        <v-projected ref="projected" :width="1024" :height="1024" mode="pattern" :delay="0"
+                     @change="onChange"></v-projected>
     </div>
     <div class="canvas">
         <template v-for="item in list">
-            <v-stage class="left" :withGuideLine="false" :ref="(el)=>getArea(el,item.id)" :id="item.id"
+            <v-stage class="left" :withGuideLine="false" :ref="(el)=>getStages(el,item.id)" :id="item.id"
                      :width="item.width" :height="item.height">
             </v-stage>
         </template>
@@ -24,30 +23,17 @@ import ev from "../../src/const/event";
 
 
 const canvue = inject('canvue')
-const uv = ref(null)
-const areas = {} // ref 数组
+const projected = ref(null)
+const stages = {} // stage refs
 
 /**
  * 动态获取动态生成的ref列表值
  * @param el
  * @param id
  */
-const getArea = (el, id) => {
+const getStages = (el, id) => {
     if (el) {
-        for (let item of list) {
-            if (item.id === id) {
-                areas[id] = {
-                    uuid: id,
-                    el: el,
-                    width: item.width,
-                    height: item.height,
-                    offsetX: item.offsetX,
-                    offsetY: item.offsetY,
-                    shape: item.shape
-                };
-            }
-        }
-
+        stages[id] = el
     }
 }
 
@@ -55,10 +41,6 @@ const onChange = () => {
     // uv.value.data.stage.renderAll()
 }
 
-/**
- * 测试数据
- * @type {UnwrapNestedRefs<[{shape: string, width: number, x: number, y: number, id: string, height: number},{shape: string, width: number, x: number, y: number, id: string, height: number}]>}
- */
 const list = reactive([{
     id: 'aaa', width: 300, height: 300, offsetX: 0, offsetY: 0, shape: 'ellipse'
 }, {
@@ -71,24 +53,27 @@ const res = [
 ]
 
 const del = (id) => {
-    areas['aaa'].el.data.stage.remove(res[id])
+    stages['aaa'].el.data.stage.remove(res[id])
 }
 
 const add = (id) => {
-    areas['aaa'].el.data.stage.add(res[id])
+    stages['aaa'].el.data.stage.add(res[id])
 }
 
 onMounted(() => {
-    areas['aaa'].el.$el.onmousewheel = (e) => {
+    for (let item of list) {
+        projected.value.bindStage(item.id, stages[item.id], item.width, item.height, item.offsetX, item.offsetY, item.shape)
+    }
+    stages['aaa'].$el.onmousewheel = (e) => {
         e.preventDefault();
         res[0].objectCaching = false;
         res[0].scale(res[0].scaleX + (e.wheelDeltaY / 10000))
-        canvue.emit(ev.stage.modified.handler, areas['aaa'].el.data.stage, areas['aaa'].uuid)
-        areas['aaa'].el.data.stage.renderAll()
+        canvue.emit(ev.stage.modified.handler, stages['aaa'].data.stage, stages['aaa'].uuid)
+        stages['aaa'].data.stage.renderAll()
         return false
     }
-    areas['aaa'].el.data.stage.add(res[0])
-    areas['bbb'].el.data.stage.add(res[1])
+    stages['aaa'].data.stage.add(res[0])
+    stages['bbb'].data.stage.add(res[1])
 })
 </script>
 
