@@ -1,6 +1,6 @@
 <template>
     <div class="uv" style="zoom:20%">
-        <v-projected :width="1024" :height="1024" ref="uv" mode="image" :delay="500" :stages="areas"
+        <v-projected :width="1024" :height="1024" ref="uv" mode="pattern" :delay="0" :stages="areas"
                      @change="onChange">
         </v-projected>
     </div>
@@ -20,6 +20,7 @@
 <script setup>
 
 import {inject, onMounted, reactive, ref} from "vue";
+import ev from "../../src/const/event";
 
 
 const canvue = inject('canvue')
@@ -78,14 +79,14 @@ const add = (id) => {
 }
 
 onMounted(() => {
-    // areas['aaa'].$el.onmousewheel = (e) => {
-    //     e.preventDefault();
-    //     res[0].objectCaching = false;
-    //     res[0].scale(res[0].scaleX + (e.wheelDeltaY / 10000))
-    //
-    //     areas['aaa'].data.stage.renderAll()
-    //     return false
-    // }
+    areas['aaa'].el.$el.onmousewheel = (e) => {
+        e.preventDefault();
+        res[0].objectCaching = false;
+        res[0].scale(res[0].scaleX + (e.wheelDeltaY / 10000))
+        canvue.emit(ev.stage.modified.handler, areas['aaa'].el.data.stage, areas['aaa'].uuid)
+        areas['aaa'].el.data.stage.renderAll()
+        return false
+    }
     areas['aaa'].el.data.stage.add(res[0])
     areas['bbb'].el.data.stage.add(res[1])
 })

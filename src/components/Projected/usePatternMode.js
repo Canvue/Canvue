@@ -5,15 +5,17 @@ import ev from "../../const/event";
 import {throttle} from 'throttle-debounce';
 
 export function usePatternMode(delay) {
-    const canvue = inject('canvue') // global variable
+    const canvue = inject('canvue')
+
     /**
      * 绑定舞台数据
      * @param {object} stage - 舞台
      * @param {function} callback
      */
     const bind = (stage, callback = noop) => {
+        console.log(stage.el.c)
         const pattern = new fabric.Pattern({
-            source: stage.el.data.stage,
+            source: stage.el.c,
             repeat: 'no-repeat',
             crossOrigin: 'anonymous',
         });
@@ -30,8 +32,6 @@ export function usePatternMode(delay) {
         canvue.on(ev.stage.removed.handler, refreshFunc, stage.uuid)
         canvue.on(ev.stage.modified.handler, refreshFunc, stage.uuid)
 
-
-        callback && callback()
         return shapeObj
     }
 
