@@ -15,7 +15,9 @@ export function useImageMode(delay) {
     const bind = (stage, callback = noop) => {
         const shape = clipPathShape.hasOwnProperty(stage.shape) ? stage.shape : 'rect' // 检测形状类型
         const shapeObj = clipPathShape[shape](stage.width, stage.height, stage.offsetX, stage.offsetY) // 创建形状
-        const img = new Image()
+
+        const img = new Image(stage.width, stage.height)
+
         const image = new fabric.Image(img, {
             width: stage.width,
             height: stage.height,
@@ -29,7 +31,6 @@ export function useImageMode(delay) {
                 image.set('dirty', true);
                 callback && callback()
             }
-            callback && callback()
         })
 
         canvue.on(ev.stage.loaded.handler, refreshFunc, stage.uuid)
@@ -37,6 +38,7 @@ export function useImageMode(delay) {
         canvue.on(ev.stage.removed.handler, refreshFunc, stage.uuid)
         canvue.on(ev.stage.modified.handler, refreshFunc, stage.uuid)
 
+        refreshFunc && refreshFunc()
         return image
     }
 

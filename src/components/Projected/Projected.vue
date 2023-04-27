@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import {markRaw, onMounted, ref} from "vue";
+import {markRaw, onMounted, ref, watch} from "vue";
 import {usePatternMode} from "./usePatternMode";
 import {useImageMode} from "./useImageMode";
 import {createUUID, createView} from '../../libs'
@@ -48,29 +48,29 @@ export default {
 
         const {bind} = props.mode === 'pattern' ? usePatternMode(props.delay) : useImageMode(props.delay)
 
-        const render = () => {
-            if (data.viewport) {
-                data.viewport.renderAll()
-            }
-        }
-
         onMounted(() => {
             data.viewport = createView(projected.value, props.id, props.config)
             data.viewport.setWidth(props.width)
             data.viewport.setHeight(props.height)
             data.viewport.setBackgroundColor(props.bgColor)
-            for (let key in props.stages) {
-                let stage = Object.assign({}, defaultStageValue, props.stages[key])
-                let area = bind(stage, () => {
-                    console.log("render")
-                    data.viewport.requestRenderAll()
-                    ctx.emit("change", stage.uuid)
-                })
-                data.viewport.add(area)
-            }
+            data.viewport.on()
         })
 
-        return {data, render, projected, bind}
+        watch([() => props.stages, projected], () => {
+            if (projected.value) {
+                data.viewport.clear()
+                for (let key in props.stages) {
+                    let stage = Object.assign({}, defaultStageValue, props.stages[key])
+                    let area = bind(stage, () => {
+                        data.viewport.renderAll()
+                        ctx.emit("change", stage.uuid)
+                    })
+                    data.viewport.add(area)
+                }
+            }
+        }, {immediate: true})
+
+        return {data, projected, bind}
     }
 }
 </script>

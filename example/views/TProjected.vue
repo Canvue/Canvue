@@ -1,6 +1,6 @@
 <template>
     <div class="uv" style="zoom:20%">
-        <v-projected :width="1024" :height="1024" ref="uv" mode="pattern" :delay="0" :stages="areas"
+        <v-projected :width="1024" :height="1024" ref="uv" mode="image" :delay="0" :stages="areas"
                      @change="onChange">
         </v-projected>
     </div>
@@ -52,9 +52,9 @@ const getArea = (el, id) => {
 }
 
 const onChange = () => {
-    uv.value.render()
     // uv.value.data.stage.renderAll()
 }
+
 /**
  * 测试数据
  * @type {UnwrapNestedRefs<[{shape: string, width: number, x: number, y: number, id: string, height: number},{shape: string, width: number, x: number, y: number, id: string, height: number}]>}

@@ -13,7 +13,6 @@ export function usePatternMode(delay) {
      * @param {function} callback
      */
     const bind = (stage, callback = noop) => {
-        console.log(stage.el.c)
         const pattern = new fabric.Pattern({
             source: stage.el.c,
             repeat: 'no-repeat',
@@ -26,12 +25,14 @@ export function usePatternMode(delay) {
         const refreshFunc = throttle(delay, () => {
             callback && callback()
         })
+
         // add event
         canvue.on(ev.stage.loaded.handler, refreshFunc, stage.uuid)
         canvue.on(ev.stage.added.handler, refreshFunc, stage.uuid)
         canvue.on(ev.stage.removed.handler, refreshFunc, stage.uuid)
         canvue.on(ev.stage.modified.handler, refreshFunc, stage.uuid)
 
+        refreshFunc && refreshFunc()
         return shapeObj
     }
 
