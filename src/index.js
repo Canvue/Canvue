@@ -18,6 +18,7 @@ export default {
         // 组件注入
         // 使用方式 const useCanvue = inject('canvue')
         app.provide('canvue', canvue)
+
         // 全局注册组件
         InstallComponents(app, options.componentsPrefix)
     }

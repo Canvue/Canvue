@@ -26,7 +26,7 @@ export default {
         config: {type: Object},
         width: {type: Number, default: 1024},
         height: {type: Number, default: 1024},
-        bgColor: {type: String, default: 'rgba(255,255,255.0)'},
+        bgColor: {type: String, default: 'rgba(255,255,255,0)'},
         delay: {type: Number, default: 0},
         mode: {
             type: String, default: 'pattern', validator(value) {

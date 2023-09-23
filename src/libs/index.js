@@ -21,9 +21,9 @@ export function createView(c, uuid, config) {
         centeredScaling: true,
         enableRetinaScaling: false,
     }
-    const preview = new fabric.StaticCanvas(c, Object.assign({}, defaultConfig, config))
-    preview.uuid = uuid
+    const view = new fabric.StaticCanvas(c, Object.assign({}, defaultConfig, config))
+    view.uuid = uuid
 
-    return preview
+    return view
 }
 
